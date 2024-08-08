@@ -17,33 +17,36 @@ const things = {
 };
 const managers: model.manager.Manager[] = [
     model.manager.createHarvesterCountManager(),
+    model.manager.createRoadBuilder(),
 ];
 const stats = statistics.initializeStatistics(200);
 
 const loop = () => {
-    for (let manager of managers) {
-        manager.manage({
-            rooms: [things.rooms.main()],
-            goals,
-            statistics: stats,
-        });
-    }
-
-    for (let creep of model.game.getCreeps()) {
-        const surroundings: model.Surroundings = {
-            spawner: things.spawner.main()
-        };
-
-        if (model.creeps.harvester.archetype.hasRole(creep)) {
-            model.creeps.harvester.archetype.run(creep, {
+    if (true) {
+        for (let manager of managers) {
+            manager.manage({
+                rooms: [things.rooms.main()],
+                goals,
                 statistics: stats,
-                surroundings
             });
         }
-    }
 
-    stats.processTick();
-    stats.report.toConsole();
+        for (let creep of model.game.getCreeps()) {
+            const surroundings: model.Surroundings = {
+                spawner: things.spawner.main()
+            };
+
+            if (model.creeps.harvester.archetype.hasRole(creep)) {
+                model.creeps.harvester.archetype.run(creep, {
+                    statistics: stats,
+                    surroundings
+                });
+            }
+        }
+
+        stats.processTick();
+        stats.report.toConsole();
+    }
 };
 
 export {
