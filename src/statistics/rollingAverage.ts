@@ -1,11 +1,11 @@
 import { defekt, error, Result, value } from 'defekt';
 
+import { Statistic } from './Statistic.js';
+
 class WindowSizeLargerThanHistoryLimit extends defekt({ code: 'WindowSizeLargerThanHistoryLimit' }) {}
 
-interface RollingAveragePerTickStatistic {
+interface RollingAveragePerTickStatistic extends Statistic {
     recordValue: (value: number) => void;
-    processTick: () => void;
-
     reportAveragePerTick: (windowSize: number) => Result<number, WindowSizeLargerThanHistoryLimit>;
 }
 

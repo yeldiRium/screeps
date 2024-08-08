@@ -19,13 +19,13 @@ const loop = () => {
     if (utils.game.getCreepCount("harvester") < goals.creeps.harvesterCount) {
         if (things.rooms.main.energyAvailable > 200) {
             console.log('Spawning a harvester!');
-            creeps.harvester.spawnHarvester(things.spawner.main);
+            creeps.harvester.archetype.spawn(things.spawner.main);
         }
     }
 
     for (let creep of utils.game.getCreeps()) {
-        if (creeps.harvester.isHarvesterCreep(creep)) {
-            creeps.harvester.run(creep);
+        if (creeps.harvester.archetype.hasRole(creep)) {
+            creeps.harvester.archetype.run(creep);
         }
     }
 };

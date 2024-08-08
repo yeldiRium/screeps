@@ -1,16 +1,14 @@
+import { Statistic } from './Statistic.js';
 import { createRollingAveragePerTickStatistic } from './rollingAverage.js';
 
-interface Statistics {
+interface Statistics extends Statistic {
     record: {
         energyProduction: (amount: number) => void;
     };
     report: {
         energyPerTick: () => number;
     };
-
-    processTick: () => void;
 }
-
 
 const initializeStatistics = (windowSize: number): Statistics => {
     const producedEnergyStatistic = createRollingAveragePerTickStatistic(windowSize);
