@@ -43,6 +43,7 @@ const loop = () => {
                     statistics: stats,
                     surroundings,
                 });
+                stats.record.creeps.harvester();
                 continue;
             }
             if (model.creeps.builder.archetype.hasRole(creep)) {
@@ -50,6 +51,8 @@ const loop = () => {
                     statistics: stats,
                     surroundings,
                 });
+                stats.record.creeps.builder();
+                continue;
             }
         }
 
