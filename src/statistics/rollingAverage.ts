@@ -15,10 +15,10 @@ const createRollingAveragePerTickStatistic = (historyLimit: number): RollingAver
     let currentTick: number[] = [];
 
     return {
-        recordValue: (value: number): void => {
+        recordValue(value: number): void {
             currentTick.push(value);
         },
-        processTick: (): void => {
+        processTick(): void {
             const sum = currentTick.reduce((acc, n) => acc + n, 0);
             previousTicksSums.push(sum);
 
@@ -27,7 +27,7 @@ const createRollingAveragePerTickStatistic = (historyLimit: number): RollingAver
             }
             currentTick = [];
         },
-        reportAveragePerTick: (windowSize: number): Result<number, WindowSizeLargerThanHistoryLimit> => {
+        reportAveragePerTick(windowSize: number): Result<number, WindowSizeLargerThanHistoryLimit> {
             if (windowSize > historyLimit) {
                 return error(new WindowSizeLargerThanHistoryLimit());
             }
