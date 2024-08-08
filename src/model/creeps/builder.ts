@@ -16,7 +16,7 @@ const archetype: CreepArchetype<BuilderRole, BuilderCreep> = {
         return creep.memory.content.role === role;
     },
     spawn(spawner: StructureSpawn): void {
-        spawner.spawnCreep([WORK, CARRY, MOVE], uuid(), { memory: { content: { role, state: 'harvesting' }}});
+        spawner.spawnCreep([WORK, CARRY, MOVE], uuid(), { memory: { content: { role, state: 'harvesting' } } });
     },
     run(creep): void {
         const workResult = game.findWorkForBuilder(creep);
@@ -24,7 +24,16 @@ const archetype: CreepArchetype<BuilderRole, BuilderCreep> = {
             return;
         }
 
-        if (creep.store.getFreeCapacity() > 0) {
+        if (creep.memory.content.state === 'building' && creep.store.getUsedCapacity() === 0) {
+            creep.memory.content.state = 'harvesting';
+            creep.say('harvest');
+        }
+        if (creep.memory.content.state === 'harvesting' && creep.store.getFreeCapacity() === 0) {
+            creep.memory.content.state = 'building';
+            creep.say('build')
+        }
+
+        if (creep.memory.content.state === 'harvesting') {
             const sourceResult = game.findSourceForCreep(creep);
             if (sourceResult.hasError()) {
                 console.error(`Builder can not find source in room ${creep.room.name}`);

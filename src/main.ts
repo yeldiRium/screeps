@@ -10,15 +10,15 @@ const goals: model.Goals = {
 };
 const things = {
     rooms: {
-        main: () => Game.rooms['W57S38'],
+        main: () => Game.rooms['E17S35'],
     },
     spawner: {
-        main: () => Game.spawns['Spawn1'],
+        main: () => Game.spawns['Spawn-E17S35'],
     },
 };
 const managers: model.manager.Manager[] = [
-    model.manager.createBuilderCountManager(),
     model.manager.createHarvesterCountManager(),
+    model.manager.createBuilderCountManager(),
     model.manager.createRoadBuilder(),
 ];
 const stats = statistics.initializeStatistics(200);
