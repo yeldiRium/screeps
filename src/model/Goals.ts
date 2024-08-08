@@ -1,5 +1,6 @@
 interface Goals {
     creeps: {
+        builderCount: number;
         harvesterCount: number;
     }
 }

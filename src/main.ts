@@ -4,6 +4,7 @@ import * as statistics from './statistics/index.js';
 
 const goals: model.Goals = {
     creeps: {
+        builderCount: 2,
         harvesterCount: 5,
     },
 };
@@ -16,6 +17,7 @@ const things = {
     },
 };
 const managers: model.manager.Manager[] = [
+    model.manager.createBuilderCountManager(),
     model.manager.createHarvesterCountManager(),
     model.manager.createRoadBuilder(),
 ];
@@ -39,7 +41,14 @@ const loop = () => {
             if (model.creeps.harvester.archetype.hasRole(creep)) {
                 model.creeps.harvester.archetype.run(creep, {
                     statistics: stats,
-                    surroundings
+                    surroundings,
+                });
+                continue;
+            }
+            if (model.creeps.builder.archetype.hasRole(creep)) {
+                model.creeps.builder.archetype.run(creep, {
+                    statistics: stats,
+                    surroundings,
                 });
             }
         }

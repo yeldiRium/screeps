@@ -1,10 +1,12 @@
+import * as builder from './builder.js';
 import * as harvester from './harvester.js';
 
-type Role = harvester.HarvesterRole;
+type Role = builder.BuilderRole | harvester.HarvesterRole;
 
 export type {
     Role
 };
 export {
-    harvester
+    builder,
+    harvester,
 };
