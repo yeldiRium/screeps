@@ -1,0 +1,50 @@
+{
+  "name": "screeps-yeldir",
+  "version": "0.0.1",
+  "description": "Screeps game code.",
+  "contributors": [
+    {
+      "name": "Hannes Leutloff",
+      "email": "hannes.leutloff@yeldirum.de",
+      "url": "https://yeldirium.de/"
+    }
+  ],
+  "main": "./main.js",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "defekt": "9.3.0",
+    "lodash": "4.17.21",
+    "type-fest": "2.19.0",
+    "uuid": "8.3.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.8.0",
+    "@jest/globals": "^29.7.0",
+    "@types/eslint__js": "8.42.3",
+    "@types/jest": "^29.5.12",
+    "@types/lodash": "4.14.184",
+    "@types/screeps": "3.3.8",
+    "esbuild": "0.15.5",
+    "eslint": "9.8.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.4",
+    "ts-node": "10.9.1",
+    "typescript": "5.5.4",
+    "typescript-eslint": "8.0.1"
+  },
+  "scripts": {
+    "build": "node --loader ts-node/esm --experimental-specifier-resolution=node --no-warnings ./scripts/build.ts",
+    "build:production": "NODE_ENV=production npm run build",
+    "build:watch": "WATCH=true npm run build",
+    "lint": "eslint \"./**/*.ts\"",
+    "lint:fix": "eslint --fix \"./**/*.ts\"",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/yeldiRium/screeps.git"
+  },
+  "keywords": [],
+  "license": "MIT"
+}
