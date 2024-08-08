@@ -5,7 +5,7 @@ import * as statistics from './statistics/index.js';
 const goals: model.Goals = {
     creeps: {
         builderCount: 2,
-        harvesterCount: 5,
+        harvesterCount: 2,
     },
 };
 const things = {
