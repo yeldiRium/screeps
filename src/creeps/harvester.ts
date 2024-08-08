@@ -18,7 +18,7 @@ const archetype: CreepArchetype<HarvesterRole, HarvesterCreepMemory, HarvesterCr
     spawn: (spawner: StructureSpawn): void => {
         spawner.spawnCreep([WORK, CARRY, MOVE], uuid(), { memory: { role }});
     },
-    run: (creep: HarvesterCreep): void => {
+    run: ({ creep, statistics }): void => {
         if(creep.store.getFreeCapacity() > 0) {
             var sources = creep.room.find(FIND_SOURCES);
             if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
@@ -26,8 +26,14 @@ const archetype: CreepArchetype<HarvesterRole, HarvesterCreepMemory, HarvesterCr
             }
         }
         else if(Game.spawns['Spawn1'].store[RESOURCE_ENERGY] < Game.spawns['Spawn1'].store.getCapacity(RESOURCE_ENERGY)) {
-            if(creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+            const carriedEnergy = creep.store[RESOURCE_ENERGY];
+            const transferEnergyResult = creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY);
+
+            if(transferEnergyResult === ERR_NOT_IN_RANGE) {
                 creep.moveTo(Game.spawns['Spawn1']);
+            }
+            if (transferEnergyResult === OK) {
+                statistics.record.energyProduction(carriedEnergy);
             }
         }
     }
