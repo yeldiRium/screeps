@@ -1,23 +1,21 @@
-import { CreepArchetype } from './types.js';
+import { CreepArchetype, CustomCreep } from './types.js';
 import * as game from '../game/index.js';
 import { uuid } from '../../utils/crypto/uuid.js';
 
 const role = 'harvester';
 type HarvesterRole = typeof role;
-interface HarvesterCreepMemory {
+interface HarvesterCreepMemoryContent {
     role: HarvesterRole;
 }
-type HarvesterCreep = Creep & {
-    memory: HarvesterCreepMemory;
-}
+type HarvesterCreep = CustomCreep<HarvesterCreepMemoryContent>;
 
 const archetype: CreepArchetype<HarvesterRole, HarvesterCreep> = {
     role,
     hasRole(creep: Creep): creep is HarvesterCreep {
-        return creep.memory.role === role;
+        return creep.memory.content.role === role;
     },
     spawn(spawner: StructureSpawn): void {
-        spawner.spawnCreep([WORK, CARRY, MOVE], uuid(), { memory: { role } });
+        spawner.spawnCreep([WORK, CARRY, MOVE], uuid(), { memory: { content: { role }}});
     },
     run(creep, { statistics, surroundings }): void {
         const spawnerResult = game.getLocalSpawner(creep.room);
@@ -58,7 +56,7 @@ const archetype: CreepArchetype<HarvesterRole, HarvesterCreep> = {
 
 export type {
     HarvesterRole,
-    HarvesterCreepMemory,
+    HarvesterCreepMemoryContent,
     HarvesterCreep
 }
 export {

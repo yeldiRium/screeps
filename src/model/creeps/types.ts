@@ -9,6 +9,12 @@ interface RunParameters {
     surroundings: Surroundings;
 }
 
+type CustomCreep<TMemoryContent> = Creep & {
+    memory: {
+        content: TMemoryContent;
+    };
+}
+
 interface CreepArchetype<
     TRole extends string,
     TCreep extends Creep,
@@ -21,5 +27,6 @@ interface CreepArchetype<
 }
 
 export type {
-    CreepArchetype
+    CreepArchetype,
+    CustomCreep,
 };

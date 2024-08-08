@@ -8,7 +8,7 @@ const getCreeps = (role?: Role): Creep[] => {
     if (role === undefined) {
         return creeps;
     }
-    return filter(creeps, { memory: { role } });
+    return filter(creeps, { memory: { content: { role }}});
 };
 
 export {

@@ -1,23 +1,22 @@
-import { CreepArchetype } from './types.js';
+import { CreepArchetype, CustomCreep } from './types.js';
 import * as game from '../game/index.js';
 import { uuid } from '../../utils/crypto/uuid.js';
 
 const role = 'builder';
 type BuilderRole = typeof role;
-interface BuilderCreepMemory {
+interface BuilderCreepMemoryContent {
     role: BuilderRole;
+    state: 'building' | 'harvesting';
 }
-type BuilderCreep = Creep & {
-    memory: BuilderCreepMemory;
-}
+type BuilderCreep = CustomCreep<BuilderCreepMemoryContent>;
 
 const archetype: CreepArchetype<BuilderRole, BuilderCreep> = {
     role,
     hasRole(creep: Creep): creep is BuilderCreep {
-        return creep.memory.role === role;
+        return creep.memory.content.role === role;
     },
     spawn(spawner: StructureSpawn): void {
-        spawner.spawnCreep([WORK, CARRY, MOVE], uuid(), { memory: { role } });
+        spawner.spawnCreep([WORK, CARRY, MOVE], uuid(), { memory: { content: { role, state: 'harvesting' }}});
     },
     run(creep): void {
         const workResult = game.findWorkForBuilder(creep);
@@ -49,7 +48,7 @@ const archetype: CreepArchetype<BuilderRole, BuilderCreep> = {
 
 export type {
     BuilderRole,
-    BuilderCreepMemory,
+    BuilderCreepMemoryContent,
     BuilderCreep
 }
 export {

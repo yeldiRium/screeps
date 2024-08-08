@@ -6,7 +6,7 @@ const getCreepCount = (role?: Role): number => {
     let creeps = Object.values(Game.creeps);
 
     if (role !== undefined) {
-        creeps = filter(creeps, { memory: { role } });
+        creeps = filter(creeps, { memory: { content: { role }}});
     }
 
     return creeps.length;
