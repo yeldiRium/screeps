@@ -11,12 +11,12 @@ const createRoadBuilder = (): Manager => {
     ): RoomPosition[] => {
         const positions: RoomPosition[] = [];
 
-        // TODO: ignore start and end of path
         for (let source of sources) {
             const path = room.findPath(spawner.pos, source.pos, {
                 ignoreCreeps: true,
             });
-            for (let pathStep of path) {
+            const pathWithoutSourceTile = path.slice(0, -1);
+            for (let pathStep of pathWithoutSourceTile) {
                 positions.push(room.getPositionAt(pathStep.x, pathStep.y)!);
             }
         }
