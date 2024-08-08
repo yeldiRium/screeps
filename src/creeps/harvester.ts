@@ -1,3 +1,5 @@
+import { uuid } from '../utils/crypto/uuid.js';
+
 const role = 'harvester';
 type HarvesterRole = typeof role;
 
@@ -14,7 +16,7 @@ const isHarvesterCreep = (creep: Creep): creep is HarvesterCreep => {
 }
 
 const spawnHarvester = (spawn: StructureSpawn): void => {
-    //spawn.spawnCreep([WORK, CARRY, MOVE], uuid(), { memory: { role }});
+    spawn.spawnCreep([WORK, CARRY, MOVE], uuid(), { memory: { role }});
 };
 
 const run = (creep: HarvesterCreep): void => {
