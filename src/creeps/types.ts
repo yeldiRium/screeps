@@ -1,15 +1,21 @@
 import { Statistics } from '../statistics/index.js';
 
-interface RunParameters<TCreep extends Creep> {
-    creep: TCreep;
+interface SpawnParameters {
+
+}
+interface RunParameters {
     statistics: Statistics;
 }
 
-interface CreepArchetype<TRole extends string, TMemory extends CreepMemory, TCreep extends Creep> {
+interface CreepArchetype<
+    TRole extends string,
+    TCreep extends Creep,
+    TSpawnParameters extends SpawnParameters = {}
+> {
     readonly role: TRole;
     hasRole: (creep: Creep) => creep is TCreep;
-    spawn: (spawner: StructureSpawn) => void;
-    run: (parameters: RunParameters<TCreep>) => void;
+    spawn: (spawner: StructureSpawn, parameters: TSpawnParameters) => void;
+    run: (creep: TCreep, parameters: RunParameters) => void;
 }
 
 export type {

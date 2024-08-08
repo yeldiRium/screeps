@@ -10,7 +10,7 @@ type HarvesterCreep = Creep & {
     memory: HarvesterCreepMemory;
 }
 
-const archetype: CreepArchetype<HarvesterRole, HarvesterCreepMemory, HarvesterCreep> = {
+const archetype: CreepArchetype<HarvesterRole, HarvesterCreep> = {
     role,
     hasRole(creep: Creep): creep is HarvesterCreep {
         return creep.memory.role === role;
@@ -18,7 +18,7 @@ const archetype: CreepArchetype<HarvesterRole, HarvesterCreepMemory, HarvesterCr
     spawn(spawner: StructureSpawn): void {
         spawner.spawnCreep([WORK, CARRY, MOVE], uuid(), { memory: { role }});
     },
-    run({ creep, statistics }): void {
+    run(creep, { statistics }): void {
         if(creep.store.getFreeCapacity() > 0) {
             var sources = creep.room.find(FIND_SOURCES);
             if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
