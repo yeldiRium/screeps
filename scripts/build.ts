@@ -8,8 +8,9 @@ await fs.promises.rm('build', {
 });
 
 const isProduction = process.env.NODE_ENV === 'production';
-const isWatchMode = process.env.WATCH === 'true';
+// const isWatchMode = process.env.WATCH === 'true';
 
+// TODO: rebuild watch mode https://esbuild.github.io/api/#watch
 await build({
   entryPoints: [ path.join('src', 'main.ts') ],
 
@@ -21,9 +22,8 @@ await build({
   minify: isProduction,
   sourcemap: isProduction ? false : 'inline',
   platform: 'node',
-  target: [ 'node20' ],
+  target: [ 'node8' ],
   logLevel: 'info',
-  watch: isWatchMode,
 
   plugins: []
 });
