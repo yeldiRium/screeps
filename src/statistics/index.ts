@@ -18,56 +18,58 @@ interface Statistics extends Statistic {
             builder: () => number;
             all: () => number;
         }
-        energyPerTick: () => number;
+        energyProducedPerTick: () => number;
 
         toConsole: () => void;
     };
 }
 
 const initializeStatistics = (windowSize: number): Statistics => {
-    const harvesterCreepsCounter = createCounterStatistic();
-    const builderCreepsCounter = createCounterStatistic();
-    const allCreepsCounter = createCounterStatistic();
-    const producedEnergyStatistic = createRollingAveragePerTickStatistic(windowSize);
+    const statistics = {
+        harvesterCreepsCounter: createCounterStatistic(),
+        builderCreepsCounter: createCounterStatistic(),
+        allCreepsCounter: createCounterStatistic(),
+        producedEnergyStatistic: createRollingAveragePerTickStatistic(windowSize),
+    };
 
     return {
         record: {
             creeps: {
                 harvester(): void {
-                    harvesterCreepsCounter.increaseCounter();
-                    allCreepsCounter.increaseCounter();
+                    statistics.harvesterCreepsCounter.increaseCounter();
+                    statistics.allCreepsCounter.increaseCounter();
                 },
                 builder(): void {
-                    builderCreepsCounter.increaseCounter();
-                    allCreepsCounter.increaseCounter();
+                    statistics.builderCreepsCounter.increaseCounter();
+                    statistics.allCreepsCounter.increaseCounter();
                 },
             },
             energyProduction(amount: number): void {
-                producedEnergyStatistic.recordValue(amount);
+                statistics.producedEnergyStatistic.recordValue(amount);
             }
         },
         report: {
             creeps: {
                 harvester(): number {
-                    return harvesterCreepsCounter.reportLastValue();
+                    return statistics.harvesterCreepsCounter.reportLastValue();
                 },
                 builder(): number {
-                    return builderCreepsCounter.reportLastValue();
+                    return statistics.builderCreepsCounter.reportLastValue();
                 },
                 all(): number {
-                    return allCreepsCounter.reportLastValue();
+                    return statistics.allCreepsCounter.reportLastValue();
                 },
             },
-            energyPerTick(): number {
-                return producedEnergyStatistic.reportAveragePerTick(windowSize).unwrapOrThrow();
+            energyProducedPerTick(): number {
+                return statistics.producedEnergyStatistic.reportAveragePerTick(windowSize).unwrapOrThrow();
             },
             toConsole(): void {
                 console.log(stripIndent`
                     ####################
                     # Statistics Report
                     ####
-                    # Average energy produced per tick over the last ${windowSize} ticks:
-                    # ${Math.round(this.energyPerTick() * 100) / 100}
+                    # Average energy per tick over the last ${windowSize} ticks
+                    # produced : ${(Math.round(this.energyProducedPerTick() * 100) / 100).toString().padStart(8, ' ')}
                     ####
                     # ${this.creeps.harvester().toString().padStart(5, ' ')} | Harvesters
                     # ${this.creeps.builder().toString().padStart(5, ' ')} | Builders
@@ -77,10 +79,9 @@ const initializeStatistics = (windowSize: number): Statistics => {
             }
         },
         processTick(): void {
-            harvesterCreepsCounter.processTick();
-            builderCreepsCounter.processTick();
-            allCreepsCounter.processTick();
-            producedEnergyStatistic.processTick();
+            for (let statistic of Object.values(statistics)) {
+                statistic.processTick();
+            }
         }
     }
 };

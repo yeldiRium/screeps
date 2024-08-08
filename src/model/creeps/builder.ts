@@ -18,7 +18,7 @@ const archetype: CreepArchetype<BuilderRole, BuilderCreep> = {
     spawn(spawner: StructureSpawn): void {
         spawner.spawnCreep([WORK, CARRY, MOVE], uuid(), { memory: { content: { role, state: 'harvesting' } } });
     },
-    run(creep): void {
+    run(creep, { statistics }): void {
         const workResult = game.findWorkForBuilder(creep);
         if (workResult.hasError()) {
             return;
