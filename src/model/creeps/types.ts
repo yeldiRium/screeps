@@ -1,10 +1,12 @@
-import { Statistics } from '../statistics/index.js';
+import { Statistics } from '../../statistics/index.js';
+import { Surroundings } from '../Surroundings.js';
 
 interface SpawnParameters {
 
 }
 interface RunParameters {
     statistics: Statistics;
+    surroundings: Surroundings;
 }
 
 interface CreepArchetype<
