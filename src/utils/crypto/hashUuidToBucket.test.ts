@@ -28,6 +28,6 @@ describe('hashUuidToBucket', (): void => {
         const result = hashUuidToBucket(uuid, buckets);
 
         expect(result.hasValue()).toBe(true);
-        expect(result.unwrapOrThrow()).toBe(6);
+        expect(result.unwrapOrThrow()).toBe(2);
     });
 });

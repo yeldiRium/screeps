@@ -17,7 +17,7 @@ describe('uuidToNumber', (): void => {
         const numberResult = uuidToNumber(uuid);
 
         expect(numberResult.hasValue()).toBe(true)
-        expect(numberResult.unwrapOrThrow()).toBe(2.760094908476075e+38);
+        expect(numberResult.unwrapOrThrow()).toBe(92275028291035);
     });
 
     test('returns an error, if the given uuid is invalid', async (): Promise<void> => {

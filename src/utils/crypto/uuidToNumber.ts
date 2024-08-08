@@ -7,8 +7,8 @@ const uuidToNumber = (uuid: string): Result<number, UuidInvalid> => {
         return error(new UuidInvalid());
     }
 
-    const uuidWithoutDashes = uuid.replace(/-/gu, '');
-    const number = parseInt(uuidWithoutDashes, 16);
+    const lastUuidSegment = uuid.slice(-12);
+    const number = parseInt(lastUuidSegment, 16);
 
     return value(number);
 };

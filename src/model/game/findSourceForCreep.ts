@@ -1,15 +1,18 @@
 import { defekt, error, Result, value } from 'defekt';
 
+import * as utils from '../../utils/index.js';
+
 class NoSourceFound extends defekt({ code: 'NoSourceFound' }) {}
 
 const findSourceForCreep = (creep: Creep): Result<Source, NoSourceFound> => {
-    const source = creep.pos.findClosestByRange(FIND_SOURCES);
-
-    if (source === null) {
+    const sources = creep.room.find(FIND_SOURCES);
+    if (sources.length === 0) {
         return error(new NoSourceFound());
     }
 
-    return value(source);
+    const selectedSourceBucket = utils.crypto.hashUuidToBucket(creep.name, sources.length).unwrapOrThrow();
+
+    return value(sources[selectedSourceBucket]);
 };
 
 export {
