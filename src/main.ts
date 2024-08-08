@@ -4,30 +4,30 @@ import * as statistics from './statistics/index.js';
 
 const goals = {
     creeps: {
-        harvesterCount: 2
+        harvesterCount: 3
     }
 };
 const things = {
     rooms: {
-        main: Game.rooms['W57S38']
+        main: () => Game.rooms['W57S38']
     },
     spawner: {
-        main: Game.spawns['Spawn1']
+        main: () => Game.spawns['Spawn1']
     }
 };
-const stats = statistics.initializeStatistics(50);
+const stats = statistics.initializeStatistics(200);
 
 const loop = () => {
     if (model.game.getCreepCount("harvester") < goals.creeps.harvesterCount) {
-        if (things.rooms.main.energyAvailable > 200) {
+        if (things.rooms.main().energyAvailable > 200) {
             console.log('Spawning a harvester!');
-            model.creeps.harvester.archetype.spawn(things.spawner.main, {});
+            model.creeps.harvester.archetype.spawn(things.spawner.main(), {});
         }
     }
 
     for (let creep of model.game.getCreeps()) {
         const surroundings: model.Surroundings = {
-            spawner: things.spawner.main
+            spawner: things.spawner.main()
         };
 
         if (model.creeps.harvester.archetype.hasRole(creep)) {
