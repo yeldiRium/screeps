@@ -1,5 +1,3 @@
-import { v4 as uuid } from 'uuid';
-
 const role = 'harvester';
 type HarvesterRole = typeof role;
 
@@ -7,11 +5,19 @@ interface HarvesterCreepMemory {
     role: HarvesterRole;
 }
 
+type HarvesterCreep = Creep & {
+    memory: HarvesterCreepMemory;
+}
+
+const isHarvesterCreep = (creep: Creep): creep is HarvesterCreep => {
+    return creep.memory.role === role;
+}
+
 const spawnHarvester = (spawn: StructureSpawn): void => {
     //spawn.spawnCreep([WORK, CARRY, MOVE], uuid(), { memory: { role }});
 };
 
-const run = (creep: Creep): void => {
+const run = (creep: HarvesterCreep): void => {
     if(creep.store.getFreeCapacity() > 0) {
         var sources = creep.room.find(FIND_SOURCES);
         if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
@@ -27,8 +33,12 @@ const run = (creep: Creep): void => {
 
 export type {
     HarvesterRole,
-    HarvesterCreepMemory
+    HarvesterCreepMemory,
+    HarvesterCreep
 }
 export {
-    role, spawnHarvester, run
+    role,
+    isHarvesterCreep,
+    spawnHarvester,
+    run
 }

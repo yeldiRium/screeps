@@ -1,2 +1,1 @@
-export * from './getCreepCount.js';
-export * from './getCreeps.js';
+export * as game from './game/index.js';
