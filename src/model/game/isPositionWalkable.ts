@@ -12,6 +12,9 @@ const isPositionWalkable = (roomPosition: RoomPosition, room: Room): boolean => 
                 return false;
             }
         }
+        if (object.type === LOOK_CREEPS) {
+            return false;
+        }
     }
 
     return true;
