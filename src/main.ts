@@ -8,14 +8,6 @@ const goals: model.Goals = {
         harvesterCount: 2,
     },
 };
-const things = {
-    rooms: {
-        main: () => Game.rooms['E17S35'],
-    },
-    spawner: {
-        main: () => Game.spawns['Spawn-E17S35'],
-    },
-};
 const managers: model.manager.Manager[] = [
     model.manager.createHarvesterCountManager(),
     model.manager.createBuilderCountManager(),
@@ -36,14 +28,10 @@ const loop = () => {
         console.log(`RUNNING INITALIZE ONCE`);
 
         // Put things here that should be done once at the beginning.
-        const surroundings: model.Surroundings = {
-            spawner: things.spawner.main(),
-        };
         for (let creep of Object.values(Game.creeps)) {
             if (model.creeps.harvester.archetype.hasRole(creep)) {
                 model.creeps.harvester.archetype.resetIntents(creep, {
                     statistics: stats,
-                    surroundings,
                     memory: Memory,
                 });
                 continue;
@@ -51,7 +39,6 @@ const loop = () => {
             if (model.creeps.builder.archetype.hasRole(creep)) {
                 model.creeps.builder.archetype.resetIntents(creep, {
                     statistics: stats,
-                    surroundings,
                     memory: Memory,
                 });
                 continue;
@@ -66,21 +53,16 @@ const loop = () => {
 
         for (let manager of managers) {
             manager.manage({
-                rooms: [things.rooms.main()],
+                rooms: [...Object.values(Game.rooms)],
                 goals,
                 statistics: stats,
             });
         }
 
         for (let creep of model.game.getCreeps()) {
-            const surroundings: model.Surroundings = {
-                spawner: things.spawner.main(),
-            };
-
             if (model.creeps.harvester.archetype.hasRole(creep)) {
                 model.creeps.harvester.archetype.run(creep, {
                     statistics: stats,
-                    surroundings,
                     memory: Memory,
                 });
                 stats.record.creeps.harvester();
@@ -89,7 +71,6 @@ const loop = () => {
             if (model.creeps.builder.archetype.hasRole(creep)) {
                 model.creeps.builder.archetype.run(creep, {
                     statistics: stats,
-                    surroundings,
                     memory: Memory,
                 });
                 stats.record.creeps.builder();

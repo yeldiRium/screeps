@@ -36,7 +36,7 @@ const archetype: CreepArchetype<HarvesterRole, HarvesterCreep> = {
         intents.removeHarvestIntent(memory, creep, creep.memory.content.intent.intentId);
         creep.memory.content.intent = undefined;
     },
-    run(creep, { memory, statistics, surroundings }): void {
+    run(creep, { memory, statistics }): void {
         if (creep.memory.content.state === undefined) {
             creep.memory.content.state = 'harvesting';
         }
@@ -110,10 +110,10 @@ const archetype: CreepArchetype<HarvesterRole, HarvesterCreep> = {
         }
 
         const carriedEnergy = creep.store[RESOURCE_ENERGY];
-        const transferEnergyResult = creep.transfer(surroundings.spawner, RESOURCE_ENERGY);
+        const transferEnergyResult = creep.transfer(spawner, RESOURCE_ENERGY);
 
         if (transferEnergyResult === ERR_NOT_IN_RANGE) {
-            game.moveVisibly(creep, surroundings.spawner.pos, '#ff0');
+            game.moveVisibly(creep, spawner.pos, '#ff0');
         }
         if (transferEnergyResult === OK) {
             statistics.record.energyProduction(carriedEnergy);
