@@ -10,7 +10,7 @@ const findSourceForCreep = (creep: Creep): Result<Source, NoSourceFound> => {
         return error(new NoSourceFound());
     }
 
-    const selectedSourceBucket = utils.crypto.hashUuidToBucket(creep.name, sources.length).unwrapOrThrow();
+    const selectedSourceBucket = utils.crypto.uuid.hashUuidToBucket(creep.name, sources.length).unwrapOrThrow();
 
     return value(sources[selectedSourceBucket]);
 };
