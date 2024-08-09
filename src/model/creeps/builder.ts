@@ -30,8 +30,14 @@ const archetype: CreepArchetype<BuilderRole, BuilderCreep> = {
         });
     },
     run(creep, { memory }): void {
+        if (creep.memory.content.state === undefined) {
+            creep.memory.content.state = 'harvesting';
+        }
+
         const workResult = game.findWorkForBuilder(creep);
         if (workResult.hasError()) {
+            creep.say('idle');
+            console.log(`[creep] ${creep.name}\n  idling: no work available`);
             return;
         }
 
@@ -59,7 +65,8 @@ const archetype: CreepArchetype<BuilderRole, BuilderCreep> = {
                     intents.getRoomHarvestIntents(memory, room.name)
                 );
                 if (harvestingPositionResult.hasError()) {
-                    creep.say('idling, no harvesting position available');
+                    creep.say('idle');
+                    console.log(`[creep] ${creep.name}\n  idling: no harvesting position available`)
                     return;
                 }
 

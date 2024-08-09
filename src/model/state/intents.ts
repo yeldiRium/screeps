@@ -148,6 +148,8 @@ const removeHarvestIntent = (memory: Memory, creep: Creep, intentId: Uuid): void
     const roomIntents = getRoomIntents(memory, intent.position.room);
     delete roomIntents.harvest[intentId];
     setRoomIntents(memory, intent.position.room, roomIntents);
+
+    delete memory.state.intents.index[intentId];
 }
 
 export type {
