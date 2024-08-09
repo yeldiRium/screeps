@@ -53,20 +53,13 @@ const archetype: CreepArchetype<BuilderRole, BuilderCreep> = {
 
         if (creep.memory.content.state === 'harvesting') {
             if (creep.memory.content.intent === undefined) {
-                const sourceResult = game.findSourceForCreep(creep);
-                if (sourceResult.hasError()) {
-                    console.log(`Builder can not find source in room ${room.name}`);
-                    return;
-                }
-
-                const source = sourceResult.value;
-                const harvestingPositions = game.findHarvestingPositionsAroundSource(source);
-                const harvestingPositionResult = game.chooseHarvestingPosition(
+                const harvestingPositions = game.harvesting.findHarvestingPositionsInRoom(room);
+                const harvestingPositionResult = game.harvesting.chooseHarvestingPosition(
                     harvestingPositions,
                     intents.getRoomHarvestIntents(memory, room.name)
                 );
                 if (harvestingPositionResult.hasError()) {
-                    creep.say('idling, no source available');
+                    creep.say('idling, no harvesting position available');
                     return;
                 }
 
@@ -75,8 +68,8 @@ const archetype: CreepArchetype<BuilderRole, BuilderCreep> = {
                 creep.memory.content.intent = intents.recordHarvestIntent(
                     memory,
                     creep,
-                    source,
-                    harvestingPosition
+                    harvestingPosition.source,
+                    harvestingPosition.position,
                 );
             }
 

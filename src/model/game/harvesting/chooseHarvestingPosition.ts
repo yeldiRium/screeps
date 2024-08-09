@@ -1,13 +1,14 @@
 import { defekt, error, Result, value } from 'defekt';
 
-import { HarvestIntent } from "../state/intents";
+import { HarvestIntent } from "../../state/intents";
+import { HarvestingPosition } from './HarvestingPosition';
 
 class NoHarvestingPositionAvailable extends defekt({ code: 'NoHarvestingPositionAvailable' }) {}
 
 const chooseHarvestingPosition = (
-    harvestingPositions: RoomPosition[],
+    harvestingPositions: HarvestingPosition[],
     harvestingIntents: HarvestIntent[]
-): Result<RoomPosition, NoHarvestingPositionAvailable> => {
+): Result<HarvestingPosition, NoHarvestingPositionAvailable> => {
     if (harvestingPositions.length === 0) {
         return error(new NoHarvestingPositionAvailable());
     }

@@ -1,7 +1,6 @@
 export * as coordinate from './Coordinate.js';
-export * from './chooseHarvestingPosition.js';
+export * as harvesting from './harvesting/index.js';
 export * from './doesPositionHaveRoadOrConstruction.js';
-export * from './findHarvestingPositionsAroundSource.js';
 export * from './findSourceForCreep.js';
 export * from './findWorkForBuilder.js';
 export * from './getCreepCount.js';
