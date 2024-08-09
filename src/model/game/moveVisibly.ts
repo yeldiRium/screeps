@@ -1,5 +1,7 @@
-const moveVisibly = (creep: Creep, target: RoomPosition | { pos: RoomPosition }, color: string): void => {
-    creep.moveTo(target, {
+import { Coordinate } from "./Coordinate";
+
+const moveVisibly = (creep: Creep, target: RoomPosition | Coordinate, color: string): void => {
+    creep.moveTo(target.x, target.y, {
         visualizePathStyle: {
             fill: 'transparent',
             stroke: color,

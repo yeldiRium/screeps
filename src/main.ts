@@ -1,5 +1,5 @@
 import * as model from './model/index.js';
-import * as utils from './utils/index.js';
+import { initializeState } from './model/state/index.js';
 import * as statistics from './statistics/index.js';
 
 const goals: model.Goals = {
@@ -25,6 +25,10 @@ const stats = statistics.initializeStatistics(200);
 
 const loop = () => {
     if (true) {
+        if (Memory.state === undefined) {
+            Memory.state = initializeState();
+        }
+
         for (let manager of managers) {
             manager.manage({
                 rooms: [things.rooms.main()],
@@ -35,13 +39,14 @@ const loop = () => {
 
         for (let creep of model.game.getCreeps()) {
             const surroundings: model.Surroundings = {
-                spawner: things.spawner.main()
+                spawner: things.spawner.main(),
             };
 
             if (model.creeps.harvester.archetype.hasRole(creep)) {
                 model.creeps.harvester.archetype.run(creep, {
                     statistics: stats,
                     surroundings,
+                    memory: Memory,
                 });
                 stats.record.creeps.harvester();
                 continue;
@@ -50,6 +55,7 @@ const loop = () => {
                 model.creeps.builder.archetype.run(creep, {
                     statistics: stats,
                     surroundings,
+                    memory: Memory,
                 });
                 stats.record.creeps.builder();
                 continue;

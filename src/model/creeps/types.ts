@@ -7,6 +7,7 @@ interface SpawnParameters {
 interface RunParameters {
     statistics: Statistics;
     surroundings: Surroundings;
+    memory: Memory;
 }
 
 type CustomCreep<TMemoryContent> = Creep & {

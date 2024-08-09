@@ -1,8 +1,12 @@
+export * as coordinate from './Coordinate.js';
+export * from './chooseHarvestingPosition.js';
 export * from './doesPositionHaveRoadOrConstruction.js';
+export * from './findHarvestingPositionsAroundSource.js';
 export * from './findSourceForCreep.js';
 export * from './findWorkForBuilder.js';
 export * from './getCreepCount.js';
 export * from './getCreeps.js';
 export * from './getEnergySourcesInRoom.js';
 export * from './getLocalSpawner.js';
+export * from './isPositionWalkable.js';
 export * from './moveVisibly.js';
