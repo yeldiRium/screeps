@@ -23,8 +23,43 @@ const managers: model.manager.Manager[] = [
 ];
 const stats = statistics.initializeStatistics(200);
 
+////////////////////////////
+// CONTROL PANEL
+/////
+const shouldRun = true;
+let shouldInitialize = true;
+////////////////////////////
+
 const loop = () => {
-    if (true) {
+    if (shouldInitialize) {
+        shouldInitialize = false;
+        console.log(`RUNNING INITALIZE ONCE`);
+
+        // Put things here that should be done once at the beginning.
+        const surroundings: model.Surroundings = {
+            spawner: things.spawner.main(),
+        };
+        for (let creep of Object.values(Game.creeps)) {
+            if (model.creeps.harvester.archetype.hasRole(creep)) {
+                model.creeps.harvester.archetype.resetIntents(creep, {
+                    statistics: stats,
+                    surroundings,
+                    memory: Memory,
+                });
+                continue;
+            }
+            if (model.creeps.builder.archetype.hasRole(creep)) {
+                model.creeps.builder.archetype.resetIntents(creep, {
+                    statistics: stats,
+                    surroundings,
+                    memory: Memory,
+                });
+                continue;
+            }
+        }
+    }
+
+    if (shouldRun) {
         if (Memory.state === undefined) {
             Memory.state = initializeState();
         }

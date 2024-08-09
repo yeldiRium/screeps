@@ -25,6 +25,7 @@ interface CreepArchetype<
     hasRole: (creep: Creep) => creep is TCreep;
     spawn: (spawner: StructureSpawn, parameters: TSpawnParameters) => void;
     run: (creep: TCreep, parameters: RunParameters) => void;
+    resetIntents: (creep: TCreep, parameters: RunParameters) => void;
 }
 
 export type {

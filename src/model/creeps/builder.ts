@@ -29,6 +29,13 @@ const archetype: CreepArchetype<BuilderRole, BuilderCreep> = {
             }
         });
     },
+    resetIntents(creep, { memory }): void {
+        if (creep.memory.content.intent === undefined) {
+            return;
+        }
+        intents.removeHarvestIntent(memory, creep, creep.memory.content.intent.intentId);
+        creep.memory.content.intent = undefined;
+    },
     run(creep, { memory }): void {
         if (creep.memory.content.state === undefined) {
             creep.memory.content.state = 'harvesting';
